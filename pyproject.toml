@@ -1,0 +1,15 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+
+[project]
+name = "disco"
+version = "0.0.1"
+description = "Disco: Distributed Spectral Condition Optimizer"
+authors = [
+    { name="J. Wang" },
+    { name="O. Filatov" },
+    { name="J. Ebert" },
+    { name="S. Kesselheim" }
+]
