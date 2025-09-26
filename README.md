@@ -1,10 +1,10 @@
-Disco: Distributed Spectral Conditioned Optimizer for Muon/Scion.
+# 💃Disco🕺: 🪩 Distributed Spectral Conditioned Optimizer for Muon/Scion 🪩
 
 # Overview
 - Disco is a distributed Spectral Conditioned optimizer. (Works for DDP/FSDP/TP/EP/CP/PP etc.)
-- It supports `DTensor`-friendly semi-orthogonal initialization in [`orthognal_init.py`](orthognal_init.py).
-- The core optimizer is implemented in [`disco.py`](disco.py). Lmo in Spectral Conditioned's framework lives in [`abstract_disco.py`](abstract_disco.py).
-- It can track the norms of the parameters and the updates in [`norm_helper.py`](norm_helper.py). 
+- It supports `DTensor`-friendly semi-orthogonal initialization in [`orthognal_init.py`](./disco/orthognal_init.py).
+- The core optimizer is implemented in [`disco.py`](./disco/disco.py). Lmo in Spectral Conditioned's framework lives in [`abstract_disco.py`](./disco/abstract_disco.py).
+- It can track the norms of the parameters and the updates in [`norm_helper.py`](./disco/norm_helper.py). 
     - one can easily to extend these code to have Spectral Clip which forces weights live on Stiefel manifold in distributed manner.
 - It integrates with TorchTitan’s model and parallel‑dimension abstractions. Please follow [TorchTitan’s](https://github.com/pytorch/torchtitan) conventions for model definitions and world‑mesh/parallel‑dimension.
 
@@ -14,7 +14,7 @@ Disco: Distributed Spectral Conditioned Optimizer for Muon/Scion.
 - The optimizer expects a standard PyTorch `model` and a TorchTitan parallel‑dimension description (e.g., `world_mesh`, `dp/fsdp/tp` flags). For an end‑to‑end example of model and parallel setup, please refer to TorchTitan’s documentation.
     - Alternatively, you can use a dummy parallel dimension setup which assume you are running on DDP.
 
-- Minimal usage sketch (see `example.py` for a runnable script):
+- Minimal usage sketch (see [`example.py`](./example.py) for a runnable script):
 
   ```python
   import torch
@@ -54,6 +54,10 @@ Disco: Distributed Spectral Conditioned Optimizer for Muon/Scion.
       ],
       "name_of_embedding": "tok_embeddings",
   }
+
+  # For `torchtitan` users, you can parse the optimizer_config to get the optimizer_kwargs
+  # optimizer_kwargs = create_disco_optimizer_kwargs_from_optimizer_config(optimizer_config, parallel_dims)
+    
 
   params, cleaned = create_disco_param_groups(model, optimizer_kwargs)
   opt = Disco(params, **cleaned)

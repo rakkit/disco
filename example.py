@@ -8,6 +8,7 @@ https://github.com/pytorch/torchtitan
 
 import torch
 from disco import Disco, create_disco_param_groups
+from disco import create_disco_optimizer_kwargs_from_optimizer_config
 from disco.dummy_parallel_dims import DummyParallelDims
 from disco import build_init_fn
 
@@ -73,6 +74,8 @@ if __name__ == "__main__":
         "name_of_embedding": "tok_embeddings",  # this varible is important for tracking embedding's norms
     }
 
+    # For `torchtitan` users, you can parse the optimizer_config to get the optimizer_kwargs
+    # optimizer_kwargs = create_disco_optimizer_kwargs_from_optimizer_config(optimizer_config, parallel_dims)
     params, cleaned = create_disco_param_groups(model, optimizer_kwargs)
     opt = Disco(params, **cleaned)
 
